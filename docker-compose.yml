@@ -1,0 +1,53 @@
+
+version: '3'
+services:
+    myApp:
+      container_name: quotes-api
+      build:
+        context: ./
+        dockerfile: Dockerfile
+        args:
+          RELEASE_SHA: 'unknown'
+
+      image: quotes-api
+      ports:
+          - '8000:80'
+
+      environment:
+          DB_HOST : 'pgsql'
+          DB_PORT: '5432'
+          DB_USER: 'postgres'
+          DB_NAME: 'myAppDB'
+          DB_PASSWORD: 'postgres'
+
+          APP_NAME: 'AppAwesomeApp'
+          RELEASE_SHA : 'unknown'
+    
+      networks:
+          - myAppNetwork
+      depends_on:
+          - pgsql
+    pgsql:
+        image: 'postgres:15'
+        ports:
+            - '5432:5432'
+        environment:
+            PGPASSWORD: 'postgres'
+            POSTGRES_DB: 'myAppDB'
+            POSTGRES_USER: 'postgres'
+            POSTGRES_PASSWORD: 'postgres'
+            
+        volumes:
+            - 'my_db_vol:/var/lib/postgresql/data'
+        networks:
+            - myAppNetwork
+        healthcheck:
+            test: ["CMD", "pg_isready", "-q", "-d", "myAppDB", "-U", "postgres"]
+            retries: 3
+            timeout: 5s
+networks:
+    myAppNetwork:
+        driver: bridge
+volumes:
+    my_db_vol:
+        driver: local

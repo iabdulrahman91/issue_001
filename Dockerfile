@@ -27,18 +27,14 @@ RUN chmod +x main.py
 
 
 
-ENV DB_HOST=127.0.0.1
-ENV DB_USER=smartcaruser
-ENV DB_NAME=smartcarv0
-ENV DB_PASSWORD=smartcarpassword
- 
-
-
-
-ENV DB_PORT=5432
-ENV APP_NAME=$APP_NAME
-ARG RELEASE_SHA=unknown
-ENV RELEASE_SHA=$RELEASE_SHA
+# ENV DB_HOST=127.0.0.1
+# ENV DB_USER=smartcaruser
+# ENV DB_NAME=smartcarv0
+# ENV DB_PASSWORD=smartcarpassword
+# ENV DB_PORT=5432
+# ENV APP_NAME=$APP_NAME
+# ARG RELEASE_SHA=unknown
+# ENV RELEASE_SHA=$RELEASE_SHA
 
 # RUN /start-reload.sh
 
